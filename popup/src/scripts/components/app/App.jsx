@@ -7,14 +7,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    chrome.tabs.query({}, (tabs) => {
-      tabs.map((tab) => {
-        this.props.dispatch({
-          type: 'ADD_TAB',
-          payload: tab
-        });
-      });
-    });
+    chrome.tabs.create({'url': 'zero.html'})
   }
 
   render() {
