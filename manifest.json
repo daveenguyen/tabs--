@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+  "name": "snooze-tab",
+  "description": "Snooze Chrome Tabs",
+  "version": "0.0.0.1",
+  "background": {
+    "scripts": [
+      "event.js"
+    ],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_title": "Snooze Tab",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "css": [],
+      "js": ["content.js"]
+    }
+  ]
+}

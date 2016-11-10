@@ -1,0 +1,29 @@
+{
+  "name": "snooze-tabs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Davee Nguyen <davee@daveenguyen.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "gulp"
+  },
+  "dependencies": {
+    "react": "^15.3.2",
+    "react-chrome-redux": "^0.0.8",
+    "react-dom": "^15.3.2",
+    "react-redux": "^4.4.5",
+    "redux": "^3.6.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.7",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "gulp": "^3.9.1",
+    "gulp-load-plugins": "^1.4.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-util": "^3.0.7",
+    "rimraf": "^2.5.4",
+    "webpack": "^1.13.3"
+  }
+}
