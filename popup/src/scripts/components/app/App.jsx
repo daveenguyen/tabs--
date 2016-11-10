@@ -7,7 +7,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    chrome.tabs.create({'url': 'zero.html'})
   }
 
   render() {

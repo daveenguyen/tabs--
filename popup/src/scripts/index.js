@@ -13,3 +13,5 @@ const proxyStore = new Store({
 render(
     <Provider store={proxyStore}><App /></Provider>
   , document.getElementById('app'));
+
+chrome.tabs.create({'url': 'zero.html'})
