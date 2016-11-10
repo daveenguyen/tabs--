@@ -8,9 +8,10 @@ export default (state = initialState, action) => {
       return { ...state, [action.payload.id]: action.payload };
     case 'REMOVE_TAB':
       let copy = Object.assign({}, state)
-      delete copy[action.payload.id];
+      delete copy[action.payload];
       return copy;
     default:
+      console.log(action.type, action.payload);
       return state;
   }
 };

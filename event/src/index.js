@@ -14,8 +14,39 @@ chrome.tabs.query({}, (tabs) => {
   });
 });
 
-store.subscribe(() => {
-  console.log(store.getState().openedTabs);
+chrome.tabs.onReplaced.addListener((addedId, removedId) => {
+  store.dispatch({
+    type: 'REMOVE_TAB',
+    payload: removedId
+  });
+
+  chrome.tabs.get(addedId, (tab) => {
+    store.dispatch({
+      type: 'ADD_TAB',
+      payload: tab
+    });
+  });
+});
+
+chrome.tabs.onCreated.addListener((tab) => {
+  store.dispatch({
+    type: 'ADD_TAB',
+    payload: tab
+  });
+});
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  store.dispatch({
+    type: 'ADD_TAB',
+    payload: tab
+  });
+});
+
+chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
+  store.dispatch({
+    type: 'REMOVE_TAB',
+    payload: tabId
+  });
 });
 
 wrapStore(store, {
