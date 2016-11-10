@@ -8,6 +8,7 @@
     "start": "gulp"
   },
   "dependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "react": "^15.3.2",
     "react-chrome-redux": "^0.0.8",
     "react-dom": "^15.3.2",

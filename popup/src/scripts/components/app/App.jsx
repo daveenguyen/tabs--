@@ -6,6 +6,17 @@ class App extends Component {
     super(props);
   }
 
+  componentDidMount() {
+    chrome.tabs.query({}, (tabs) => {
+      tabs.map((tab) => {
+        this.props.dispatch({
+          type: 'ADD_TAB',
+          payload: tab
+        });
+      });
+    });
+  }
+
   render() {
     return (
       <div>
