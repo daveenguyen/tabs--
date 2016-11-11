@@ -1,7 +1,5 @@
 const initialState = {};
 
-
-
 export default (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_TAB':
@@ -11,7 +9,6 @@ export default (state = initialState, action) => {
       delete copy[action.payload];
       return copy;
     default:
-      console.log(action.type, action.payload);
       return state;
   }
 };

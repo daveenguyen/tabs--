@@ -13,7 +13,11 @@ class App extends Component {
         let curTab = openedTabs[key];
         return (
           <li key={key}>
-            <a href={curTab.url} target="new">[{key}] {curTab.title}</a>
+            <div>
+              <button onClick={() => this.dispatchOpenAlias(curTab)}>[{key}] {curTab.title}</button>
+              <button onClick={() => this.dispatchSnoozeAlias(curTab)}>Snooze</button>
+              <button onClick={() => this.dispatchDoneAlias(curTab)}>Done</button>
+            </div>
           </li>
         );
       });
@@ -23,11 +27,33 @@ class App extends Component {
   render() {
     return (
       <div>
+        <h1>Opened Tabs</h1>
         <ol>
           {this.getTabs()}
         </ol>
       </div>
     );
+  }
+
+  dispatchOpenAlias(tab) {
+    this.props.dispatch({
+      type: 'user-clicked-open',
+      payload: tab
+    });
+  }
+
+  dispatchSnoozeAlias(tab) {
+    this.props.dispatch({
+      type: 'user-clicked-snooze',
+      payload: tab
+    });
+  }
+
+  dispatchDoneAlias(tab) {
+    this.props.dispatch({
+      type: 'user-clicked-done',
+      payload: tab
+    });
   }
 }
 

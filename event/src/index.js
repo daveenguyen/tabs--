@@ -1,9 +1,17 @@
-import {createStore} from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import { alias, wrapStore } from 'react-chrome-redux';
 import rootReducer from './reducers';
+import aliases from './aliases';
 
-import {wrapStore} from 'react-chrome-redux';
+const middleware = [
+  alias(aliases),
+];
 
-const store = createStore(rootReducer, {});
+const store = createStore(
+  rootReducer,
+  {},
+  applyMiddleware(...middleware)
+);
 
 chrome.tabs.query({}, (tabs) => {
   tabs.map((tab) => {
