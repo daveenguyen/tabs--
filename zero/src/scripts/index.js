@@ -2,9 +2,11 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Store } from 'react-chrome-redux';
 import { Provider } from 'react-redux';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import App from './components/app/App';
 
+injectTapEventPlugin();
 
 const proxyStore = new Store({
   portName: 'example'

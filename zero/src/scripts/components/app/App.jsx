@@ -6,10 +6,26 @@ import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar';
 import SnoozeIcon from 'material-ui/svg-icons/action/schedule';
-import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
+import {grey400} from 'material-ui/styles/colors';
 import IconButton from 'material-ui/IconButton';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
+import Paper from 'material-ui/Paper';
+import Divider from 'material-ui/Divider';
+
+const SnoozeButton = (onTouchTap) => {
+  return <div><IconButton
+    tooltip="more"
+    tooltipPosition="bottom-left"
+    onTouchTap={onTouchTap}
+  >
+    <SnoozeIcon color={grey400} />
+  </IconButton><IconButton
+    tooltip="more"
+    tooltipPosition="bottom-left"
+    onTouchTap={onTouchTap}
+  >
+    <SnoozeIcon color={grey400} />
+  </IconButton></div>
+}
 
 class App extends Component {
   constructor(props) {
@@ -19,25 +35,29 @@ class App extends Component {
   getTabsListItem() {
     let openedTabs = this.props.openedTabs;
     if (openedTabs) {
+      let first=true;
+
       return Object.keys(openedTabs).map((key) => {
         let curTab = openedTabs[key];
+        let DividerAfterFirst;
+
+        if (first) {
+          first = false;
+        } else {
+          DividerAfterFirst = <Divider />
+        }
+
         return (
-          <ListItem key={key}
-            leftAvatar={<Avatar src={curTab.favIconUrl} />}
-            primaryText={curTab.title}
-            secondaryText={curTab.url}
-            onClick={() => this.dispatchOpenAlias(curTab)}
-            rightIconButton={
-              <IconButton
-                touch={true}
-                tooltip="more"
-                tooltipPosition="bottom-left"
-                onClick={() => this.dispatchSnoozeAlias(curTab)}
-              >
-                <SnoozeIcon color={grey400} />
-              </IconButton>
-            }
-          />
+          <div key={key}>
+            {DividerAfterFirst}
+            <ListItem
+              leftAvatar={<Avatar src={curTab.favIconUrl} />}
+              primaryText={curTab.title}
+              secondaryText={curTab.url}
+              onTouchTap={() => this.dispatchOpenAlias(curTab)}
+              rightIconButton={SnoozeButton(() => this.dispatchSnoozeAlias(curTab))}
+            />
+          </div>
         );
       });
     }
@@ -51,10 +71,12 @@ class App extends Component {
             title="Title"
             iconClassNameRight="muidocs-icon-navigation-expand-more"
           />
-          <List>
-            <Subheader>Opened Tabs</Subheader>
-            {this.getTabsListItem()}
-          </List>
+          <Paper>
+            <List>
+              <Subheader>Opened Tabs</Subheader>
+              {this.getTabsListItem()}
+            </List>
+          </Paper>
         </div>
       </MuiThemeProvider>
     );

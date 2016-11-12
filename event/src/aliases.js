@@ -1,10 +1,10 @@
 
 const clickSnooze = (originalAction) => {
-  clickDone(originalAction);
+  chrome.tabs.remove(originalAction.payload.id);
   
   setTimeout(() => {
     clickOpen(originalAction);
-  }, 1000);
+  }, 2500);
   
   return originalAction;
 }
