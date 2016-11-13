@@ -5,7 +5,9 @@ const clickSnooze = (originalAction) => {
   setTimeout(() => {
     clickOpen(originalAction);
   }, 2500);
-  
+
+  originalAction.type = 'SNOOZE_TAB';
+
   return originalAction;
 }
 
