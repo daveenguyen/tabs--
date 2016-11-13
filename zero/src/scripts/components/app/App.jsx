@@ -6,25 +6,28 @@ import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar';
 import SnoozeIcon from 'material-ui/svg-icons/action/schedule';
+import DoneIcon from 'material-ui/svg-icons/action/done';
 import {grey400} from 'material-ui/styles/colors';
 import IconButton from 'material-ui/IconButton';
 import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
 
-const SnoozeButton = (onTouchTap) => {
-  return <div><IconButton
-    tooltip="more"
-    tooltipPosition="bottom-left"
-    onTouchTap={onTouchTap}
-  >
-    <SnoozeIcon color={grey400} />
-  </IconButton><IconButton
-    tooltip="more"
-    tooltipPosition="bottom-left"
-    onTouchTap={onTouchTap}
-  >
-    <SnoozeIcon color={grey400} />
-  </IconButton></div>
+const RightButtons = (props) => {
+  return (<div>
+    <IconButton
+      tooltip="more"
+      tooltipPosition="bottom-left"
+      onTouchTap={props.onSnooze}
+    >
+      <SnoozeIcon color={grey400} />
+    </IconButton><IconButton
+      tooltip="more"
+      tooltipPosition="bottom-left"
+      onTouchTap={props.onDone}
+    >
+      <DoneIcon color={grey400} />
+    </IconButton>
+  </div>);
 }
 
 class App extends Component {
@@ -55,7 +58,11 @@ class App extends Component {
               primaryText={curTab.title}
               secondaryText={curTab.url}
               onTouchTap={() => this.dispatchOpenAlias(curTab)}
-              rightIconButton={SnoozeButton(() => this.dispatchSnoozeAlias(curTab))}
+              rightIconButton={
+                RightButtons({
+                  onSnooze: () => this.dispatchSnoozeAlias(curTab),
+                  onDone: () => this.dispatchDoneAlias(curTab),
+                })}
             />
           </div>
         );
