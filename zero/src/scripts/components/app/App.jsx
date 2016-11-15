@@ -21,7 +21,15 @@ class App extends Component {
           />
           <Paper>
             <TabsList
+              title='Opened Tabs'
               tabs={this.props.openedTabs}
+              onSnooze={this.dispatchSnoozeAlias.bind(this)} 
+              onDone={this.dispatchDoneAlias.bind(this)} 
+              onOpen={this.dispatchOpenAlias.bind(this)} 
+            />
+            <TabsList
+              title='Snoozed Tabs'
+              tabs={this.props.snoozedTabs}
               onSnooze={this.dispatchSnoozeAlias.bind(this)} 
               onDone={this.dispatchDoneAlias.bind(this)} 
               onOpen={this.dispatchOpenAlias.bind(this)} 
@@ -40,9 +48,16 @@ class App extends Component {
   }
 
   dispatchSnoozeAlias(tab) {
+    let newObj = {
+      ...tab,
+      snoozeUntil: Date.now() + 2000
+    }
+
+    console.log(newObj);
+
     this.props.dispatch({
       type: 'user-clicked-snooze',
-      payload: tab
+      payload: newObj
     });
   }
 
@@ -58,6 +73,7 @@ const mapStateToProps = (state) => {
   return {
     count: state.count,
     openedTabs: state.openedTabs,
+    snoozedTabs: state.snoozedTabs,
   };
 };
 

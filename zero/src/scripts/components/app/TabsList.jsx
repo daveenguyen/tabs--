@@ -68,7 +68,7 @@ class TabsList extends Component {
   render() {
     return (
       <List>
-        <Subheader>Opened Tabs</Subheader>
+        <Subheader>{this.props.title}</Subheader>
         {this.getTabsListItem(this.props.tabs)}
       </List>
     );
