@@ -7,7 +7,6 @@ const plugins = loadPlugins();
 
 import popupWebpackConfig from './popup/webpack.config';
 import eventWebpackConfig from './event/webpack.config';
-import contentWebpackConfig from './content/webpack.config';
 import zeroWebpackConfig from './zero/webpack.config';
 
 gulp.task('popup-js', ['clean'], (cb) => {
@@ -22,16 +21,6 @@ gulp.task('popup-js', ['clean'], (cb) => {
 
 gulp.task('event-js', ['clean'], (cb) => {
   webpack(eventWebpackConfig, (err, stats) => {
-    if(err) throw new plugins.util.PluginError('webpack', err);
-
-    plugins.util.log('[webpack]', stats.toString());
-
-    cb();
-  });
-});
-
-gulp.task('content-js', ['clean'], (cb) => {
-  webpack(contentWebpackConfig, (err, stats) => {
     if(err) throw new plugins.util.PluginError('webpack', err);
 
     plugins.util.log('[webpack]', stats.toString());
@@ -71,11 +60,10 @@ gulp.task('clean', (cb) => {
   rimraf('./build', cb);
 });
 
-gulp.task('build', ['copy-manifest', 'popup-js', 'popup-html', 'event-js', 'content-js', 'zero-js', 'zero-html']);
+gulp.task('build', ['copy-manifest', 'popup-js', 'popup-html', 'event-js', 'zero-js', 'zero-html']);
 
 gulp.task('watch', ['default'], () => {
   gulp.watch('popup/**/*', ['build']);
-  gulp.watch('content/**/*', ['build']);
   gulp.watch('event/**/*', ['build']);
   gulp.watch('zero/**/*', ['build']);
 });

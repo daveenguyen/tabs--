@@ -13,13 +13,6 @@
     "default_title": "Snooze Tab",
     "default_popup": "popup.html"
   },
-  "content_scripts": [
-    {
-      "matches": ["*://*/*"],
-      "css": [],
-      "js": ["content.js"]
-    }
-  ],
   "permissions": [
     "tabs"
   ]
