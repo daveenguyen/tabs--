@@ -30,6 +30,10 @@ class TabsList extends Component {
   constructor(props) {
     super(props);
   }
+
+  getKeyCounts(tabs) {
+    return Object.keys(tabs).length || 0;
+  }
   
   getTabsListItem(openedTabs) {
     let first=true;
@@ -66,6 +70,9 @@ class TabsList extends Component {
   }
 
   render() {
+    if (this.getKeyCounts(this.props.tabs) === 0)
+      return null;
+
     return (
       <List>
         <Subheader>{this.props.title}</Subheader>
