@@ -1,73 +1,14 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
-import {List, ListItem} from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
-import Avatar from 'material-ui/Avatar';
-import SnoozeIcon from 'material-ui/svg-icons/action/schedule';
-import DoneIcon from 'material-ui/svg-icons/action/done';
-import {grey400} from 'material-ui/styles/colors';
-import IconButton from 'material-ui/IconButton';
 import Paper from 'material-ui/Paper';
-import Divider from 'material-ui/Divider';
+import TabsList from './TabsList';
 
-const RightButtons = (props) => {
-  return (<div>
-    <IconButton
-      tooltip="more"
-      tooltipPosition="bottom-left"
-      onTouchTap={props.onSnooze}
-    >
-      <SnoozeIcon color={grey400} />
-    </IconButton><IconButton
-      tooltip="more"
-      tooltipPosition="bottom-left"
-      onTouchTap={props.onDone}
-    >
-      <DoneIcon color={grey400} />
-    </IconButton>
-  </div>);
-}
 
 class App extends Component {
   constructor(props) {
     super(props);
-  }
-
-  getTabsListItem() {
-    let openedTabs = this.props.openedTabs;
-    if (openedTabs) {
-      let first=true;
-
-      return Object.keys(openedTabs).map((key) => {
-        let curTab = openedTabs[key];
-        let DividerAfterFirst;
-
-        if (first) {
-          first = false;
-        } else {
-          DividerAfterFirst = <Divider />
-        }
-
-        return (
-          <div key={key}>
-            {DividerAfterFirst}
-            <ListItem
-              leftAvatar={<Avatar src={curTab.favIconUrl} />}
-              primaryText={curTab.title}
-              secondaryText={curTab.url}
-              onTouchTap={() => this.dispatchOpenAlias(curTab)}
-              rightIconButton={
-                RightButtons({
-                  onSnooze: () => this.dispatchSnoozeAlias(curTab),
-                  onDone: () => this.dispatchDoneAlias(curTab),
-                })}
-            />
-          </div>
-        );
-      });
-    }
   }
 
   render() {
@@ -79,10 +20,12 @@ class App extends Component {
             iconClassNameRight="muidocs-icon-navigation-expand-more"
           />
           <Paper>
-            <List>
-              <Subheader>Opened Tabs</Subheader>
-              {this.getTabsListItem()}
-            </List>
+            <TabsList
+              tabs={this.props.openedTabs}
+              onSnooze={this.dispatchSnoozeAlias.bind(this)} 
+              onDone={this.dispatchDoneAlias.bind(this)} 
+              onOpen={this.dispatchOpenAlias.bind(this)} 
+            />
           </Paper>
         </div>
       </MuiThemeProvider>
