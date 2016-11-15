@@ -13,6 +13,42 @@ const store = createStore(
   applyMiddleware(...middleware)
 );
 
+
+let unsnoozeSet = new Set();
+
+const setupUnsnooze = (tabs) => {
+
+  if (Object.keys(tabs) && Object.keys(tabs).length > 0) {
+    Object.keys(tabs).map((key) => {
+
+      let tab = tabs[key];
+
+      if (!unsnoozeSet.has(key)) {
+        unsnoozeSet.add(key);
+        console.log(tab);
+
+        let timeout = tab.snoozeUntil - Date.now();
+
+        if (timeout < 0) timeout = 0;
+
+        setTimeout(() => {
+            store.dispatch({
+              type: 'unsnooze',
+              payload: tab
+            });
+            unsnoozeSet.delete(key);
+          }
+        , timeout);
+      }
+    });
+  }
+}
+
+store.subscribe(() => {
+  setupUnsnooze(store.getState().snoozedTabs);
+})
+
+
 chrome.tabs.query({}, (tabs) => {
   tabs.map((tab) => {
     store.dispatch({
