@@ -7,17 +7,16 @@ import DoneIcon from 'material-ui/svg-icons/action/done';
 import {grey400} from 'material-ui/styles/colors';
 import IconButton from 'material-ui/IconButton';
 import Divider from 'material-ui/Divider';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+
 
 const RightButtons = (props) => {
   return (<div>
+    {snoozeIconMenu(props)}
     <IconButton
-      tooltip="more"
-      tooltipPosition="bottom-left"
-      onTouchTap={props.onSnooze}
-    >
-      <SnoozeIcon color={grey400} />
-    </IconButton><IconButton
-      tooltip="more"
+      touch={true}
+      tooltip="Done"
       tooltipPosition="bottom-left"
       onTouchTap={props.onDone}
     >
@@ -25,6 +24,28 @@ const RightButtons = (props) => {
     </IconButton>
   </div>);
 }
+
+
+const iconButtonElement = (
+  <IconButton
+    touch={true}
+    tooltip="Snooze"
+    tooltipPosition="bottom-left"
+  >
+    <SnoozeIcon color={grey400} />
+  </IconButton>
+);
+
+
+
+const snoozeIconMenu = (props) => (
+  <IconMenu iconButtonElement={iconButtonElement}>
+    <MenuItem onTouchTap={props.onSnooze}>10 seconds</MenuItem>
+    <MenuItem onTouchTap={props.onSnooze}>Tomorrow</MenuItem>
+    <MenuItem onTouchTap={props.onSnooze}>This weekend</MenuItem>
+    <MenuItem onTouchTap={props.onSnooze}>Next week</MenuItem>
+  </IconMenu>
+);
 
 class TabsList extends Component {
   constructor(props) {
