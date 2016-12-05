@@ -2,6 +2,7 @@ import { applyMiddleware, createStore } from 'redux';
 import { alias, wrapStore } from 'react-chrome-redux';
 import rootReducer from './reducers';
 import aliases from './aliases';
+import Unsnoozer from './Unsnoozer';
 
 const middleware = [
   alias(aliases),
@@ -27,37 +28,10 @@ const initializeStore = (initialState) => {
     });
   }
 
-  let unsnoozeSet = new Set();
-
-  const setupUnsnooze = (tabs) => {
-
-    if (Object.keys(tabs) && Object.keys(tabs).length > 0) {
-      Object.keys(tabs).map((key) => {
-
-        let tab = tabs[key];
-
-        if (!unsnoozeSet.has(key)) {
-          unsnoozeSet.add(key);
-
-          let timeout = tab.snoozeUntil - Date.now();
-
-          if (timeout < 2000) timeout = 2000;
-
-          setTimeout(() => {
-              store.dispatch({
-                type: 'unsnooze',
-                payload: tab
-              });
-              unsnoozeSet.delete(key);
-            }
-          , timeout);
-        }
-      });
-    }
-  }
+  let unsnoozer = new Unsnoozer(store);
 
   store.subscribe(() => {
-    setupUnsnooze(store.getState().snoozedTabs);
+    unsnoozer.processTabs(store.getState().snoozedTabs);
     saveChanges();
   })
 
