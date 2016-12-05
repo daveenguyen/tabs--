@@ -36,14 +36,60 @@ const iconButtonElement = (
   </IconButton>
 );
 
+function getTomorrow() {
+  let date = new Date();
+  date.setDate(date.getDate() + 1);
+  date.setHours(8);
+  date.setMinutes(0);
+  date.setSeconds(0);
 
+  return date.getTime();
+}
+
+function getThisWeekend() {
+  let date = new Date();
+  let day = date.getDay();
+  let offset = 5 - day;
+
+  if (day == 5) {
+    offset = 7;
+  } else if (day == 6) {
+    offset = 6;
+  }
+
+  date.setDate(date.getDate() + offset);
+  date.setHours(8);
+  date.setMinutes(0);
+  date.setSeconds(0);
+
+  return date.getTime();
+}
+
+function getNextMinute() {
+  let date = new Date();
+  date.setMinutes(date.getMinutes() + 1);
+  date.setSeconds(0);
+
+  return date.getTime();
+}
+
+function getNextWeek() {
+  let date = new Date();
+  date.setDate(date.getDate() + 7);
+  date.setHours(8);
+  date.setMinutes(0);
+  date.setSeconds(0);
+
+  return date.getTime();
+}
 
 const snoozeIconMenu = (props) => (
   <IconMenu iconButtonElement={iconButtonElement}>
-    <MenuItem onTouchTap={props.onSnooze}>10 seconds</MenuItem>
-    <MenuItem onTouchTap={props.onSnooze}>Tomorrow</MenuItem>
-    <MenuItem onTouchTap={props.onSnooze}>This weekend</MenuItem>
-    <MenuItem onTouchTap={props.onSnooze}>Next week</MenuItem>
+    <MenuItem onTouchTap={() => props.onSnooze(Date.now() + 2000)}>10 seconds</MenuItem>
+    <MenuItem onTouchTap={() => props.onSnooze(getNextMinute())}>Next Minute</MenuItem>
+    <MenuItem onTouchTap={() => props.onSnooze(getTomorrow())}>Tomorrow</MenuItem>
+    <MenuItem onTouchTap={() => props.onSnooze(getThisWeekend())}>This weekend</MenuItem>
+    <MenuItem onTouchTap={() => props.onSnooze(getNextWeek())}>Next week</MenuItem>
   </IconMenu>
 );
 
@@ -81,7 +127,7 @@ class TabsList extends Component {
             onTouchTap={() => this.props.onOpen(curTab)}
             rightIconButton={
               RightButtons({
-                onSnooze: () => this.props.onSnooze(curTab),
+                onSnooze: (time) => this.props.onSnooze(curTab, time),
                 onDone: () => this.props.onDone(curTab),
               })}
           />

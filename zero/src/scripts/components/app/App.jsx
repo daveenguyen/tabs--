@@ -47,10 +47,10 @@ class App extends Component {
     });
   }
 
-  dispatchSnoozeAlias(tab) {
+  dispatchSnoozeAlias(tab, time) {
     let newObj = {
       ...tab,
-      snoozeUntil: Date.now() + 2000
+      snoozeUntil: time
     }
 
     console.log(newObj);
